@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgresSQL_python_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PostgresSQLUser}
+      POSTGRES_PASSWORD: ${PostgresSQLPwd}
+      POSTGRES_DB: ${PostgresSQLDBName}
+    ports:
+      - "${PostgresSQLPort:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db_dump.sql:/docker-entrypoint-initdb.d/01_init.sql  # 首次启动自动导入
+
+volumes:
+  pgdata:

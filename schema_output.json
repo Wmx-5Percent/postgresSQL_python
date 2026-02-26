@@ -1,0 +1,183 @@
+{
+  "view_name": "t_mr_cs_summary_dailyFourSysResult",
+  "database": "SSMR_DW",
+  "server": "cnszn02a18",
+  "columns": [
+    {
+      "column_name": "NOTI_ID",
+      "data_type": "varchar",
+      "max_length": 500,
+      "is_nullable": "NO",
+      "default_value": null,
+      "description": "Unique notification/ticket identifier (10+ digits, e.g., '28800001618')"
+    },
+    {
+      "column_name": "NOTI_DT",
+      "data_type": "date",
+      "max_length": null,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Notification creation date — when the service ticket was first created"
+    },
+    {
+      "column_name": "NOTI_ASSIGNED_YYYYMM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Year-month when notification was assigned (YYYYMM format, e.g., '202501')"
+    },
+    {
+      "column_name": "NOTI_ASSIGNED_DT",
+      "data_type": "date",
+      "max_length": null,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Date when notification was assigned — PRIMARY date field for ALL time-based queries"
+    },
+    {
+      "column_name": "NOTI_CATEGORY_TEXT",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Service ticket category text (e.g., 'Repair due to Totally Down', 'Maintenance')"
+    },
+    {
+      "column_name": "NOTI_TEXT",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Original notification text with detailed complaint/issue description"
+    },
+    {
+      "column_name": "SYS_MAT_ID",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "System Material ID — 7-8 digit product model identifier (e.g., '10840815')"
+    },
+    {
+      "column_name": "SYS_SERIAL_ID",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "System Serial ID — unique equipment instance (1-6 digits, e.g., '74017')"
+    },
+    {
+      "column_name": "MAT_SYS_GROUP_TEXT",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Product family short name (e.g., 'AMIRA', 'VIDA', 'AERA', 'SKYRA')"
+    },
+    {
+      "column_name": "MAT_IVK_GROUP_TEXT",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Full product name including brand (e.g., 'MAGNETOM AMIRA', 'MAGNETOM VIDA')"
+    },
+    {
+      "column_name": "Issue_Summary_LLM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "LLM-generated summary of the issue/complaint"
+    },
+    {
+      "column_name": "Troubleshooting_Steps_LLM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "LLM-generated troubleshooting steps taken or recommended"
+    },
+    {
+      "column_name": "Solution_And_Action_Taken_LLM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "LLM-generated description of solution and actions taken"
+    },
+    {
+      "column_name": "Problem_CAT_L2_LLM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Level 2 problem category — specific subcategory (e.g., 'Cooling System and Shield Temperature')"
+    },
+    {
+      "column_name": "Problem_CAT_L1_LLM",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Level 1 problem category — high-level classification (e.g., 'Magnet', 'Hardware', 'Software')"
+    },
+    {
+      "column_name": "NOTI_DT_YEAROFMonth",
+      "data_type": "int",
+      "max_length": null,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Year-month of notification date as integer (YYYYMM, e.g., 202501)"
+    },
+    {
+      "column_name": "NOTI_COUNTRY_ID",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Country code (e.g., 'DE' for Germany, 'FR' for France)"
+    },
+    {
+      "column_name": "NOTI_COUNTRY_TEXT",
+      "data_type": "nvarchar",
+      "max_length": 20,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Full country name where the equipment is located (e.g., 'Germany', 'France')"
+    },
+    {
+      "column_name": "NOTI_CURRENT_CLOSED_DT",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Date when ticket was closed. **NULL means the ticket is still OPEN.** Open tickets: WHERE NOTI_CURRENT_CLOSED_DT IS NULL. Closed tickets: WHERE NOTI_CURRENT_CLOSED_DT IS NOT NULL."
+    },
+    {
+      "column_name": "NOTI_SP_CONSUMED_FLG",
+      "data_type": "varchar",
+      "max_length": -1,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Spare parts consumed flag ('Y' = Yes, 'N' = No)"
+    },
+    {
+      "column_name": "NOTI_SYS_SW_VS",
+      "data_type": "varchar",
+      "max_length": 80,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "System software version at time of ticket (e.g., 'VE11S-SP02', 'VA50A-SP01')"
+    },
+    {
+      "column_name": "NOTI_CATEGORY_ID",
+      "data_type": "varchar",
+      "max_length": 3,
+      "is_nullable": "YES",
+      "default_value": null,
+      "description": "Numeric category ID corresponding to NOTI_CATEGORY_TEXT (e.g., '100' → 'Repair due to Totally Down')"
+    }
+  ]
+}

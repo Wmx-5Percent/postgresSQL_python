@@ -1,0 +1,14 @@
+# 环境变量（含密码/API Key）
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# 如果 dump 文件超大（>50MB），也应忽略
+# db_dump.sql
