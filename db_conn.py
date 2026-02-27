@@ -40,6 +40,29 @@ def query_data_base(sql_query: str) -> dict:
     except Exception as e:
         print("sql query error:", e)
 
+SQL = f"""
+step2: SQL =====
+SELECT
+  NOTI_ID,
+  NOTI_ASSIGNED_DT,
+  NOTI_CATEGORY_TEXT,
+  MAT_IVK_GROUP_TEXT,
+  Problem_CAT_L1_LLM,
+  Problem_CAT_L2_LLM,
+  Issue_Summary_LLM,
+  Troubleshooting_Steps_LLM,
+  Solution_And_Action_Taken_LLM,
+  NOTI_COUNTRY_ID,
+  NOTI_CURRENT_CLOSED_DT
+FROM t_mr_cs_summary_dailyFourSysResult
+WHERE SYS_MAT_ID = '11060815'
+  AND SYS_SERIAL_ID = '175678'
+ORDER BY NOTI_ASSIGNED_DT DESC NULLS LAST
+LIMIT 100;
+"""
+query_results = query_data_base(SQL)
+print(query_results)
+
 if __name__ == "__main__":
     HOST=os.getenv("PostgresSQLHost")
     PORT=os.getenv("PostgresSQLPort")

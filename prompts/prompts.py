@@ -25,7 +25,7 @@ schema_lines = []
 for col_name, col_info in schema_data.get("columns", {}).items():
     schema_lines.append(f"- {col_name} ({col_info['type']}): {col_info['desc']}")
 schema_text = '\n'.join(schema_lines)
-print(schema_text)
+# print(schema_text)
 
 # ──────────────────── 加载器 ────────────────────
 loader = PromptLoader()  # 默认以自身所在目录为 prompts 根目录
