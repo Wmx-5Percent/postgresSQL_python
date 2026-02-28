@@ -5,11 +5,14 @@ Prompt 入口模块 —— 所有版本在这里集中配置，一目了然。
 from datetime import date
 import yaml
 import os
-from prompt_loader import PromptLoader
+try:
+    from .prompt_loader import PromptLoader  # 作为包导入时
+except ImportError:
+    from prompt_loader import PromptLoader   # 直接运行时
 
 # ──────────────────── 版本配置（改这里就行） ────────────────────
-FILTER_VERSION = "v1"           # SQL filter prompt 用哪个版本
-SQL_GEN_VERSION = "v1"          # SQL generator prompt 用哪个版本
+SQL_FILTER_PROMPT_VERSION = "v2"           # SQL filter prompt 用哪个版本
+POSTGRES_SQL_GEN_PROMPT_VERSION = "v3"          # SQL generator prompt 用哪个版本
 SQLITE_GEN_VERSION = "v1"       # SQLite generator prompt 用哪个版本
 
 # ──────────────────── 公共变量 ────────────────────
@@ -33,17 +36,18 @@ loader = PromptLoader()  # 默认以自身所在目录为 prompts 根目录
 # ──────────────────── System Prompt ────────────────────
 SYSTEM_PROMPT = loader.load(
     "SQL_filters_generator", 
-    "v1",
+    SQL_FILTER_PROMPT_VERSION,
     today_str=today_str,
     schema_text=schema_text,
 )
-print(SYSTEM_PROMPT)
+# print(SYSTEM_PROMPT)
 
 
 # ──────────────────── SQL 生成 Prompt ────────────────────
-def build_sql_generate_prompt(filters_json: str) -> str:
+def build_postgres_sql_generate_prompt(filters_json: str) -> str:
     return loader.load(
-        "SQL_generator", SQL_GEN_VERSION,
+        "SQL_Postgres_generator", 
+        POSTGRES_SQL_GEN_PROMPT_VERSION,
         filters_json=filters_json,
         schema_text=schema_text,
     )
