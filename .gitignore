@@ -12,3 +12,6 @@ venv/
 
 # 如果 dump 文件超大（>50MB），也应忽略
 # db_dump.sql
+
+# ChromaDB 持久化数据（自动生成，不需要提交）
+rag/chroma_db/

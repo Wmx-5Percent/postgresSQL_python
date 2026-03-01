@@ -2,7 +2,10 @@ import os
 import sys
 import time
 
-sys.path.insert(0, os.path.join(os.path. dirname(os.path.abspath(__file__)), ".."))
+# Dev-only: allow running this file interactively from evals/
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 import csv
 from typing import List, Dict
@@ -11,7 +14,12 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
-from prompts import SYSTEM_PROMPT, build_postgres_sql_generate_prompt
+from prompts import (
+    SYSTEM_PROMPT, 
+    build_postgres_sql_generate_prompt,
+    build_rag_enhanced_postgres_sql_generate_prompt,
+    build_rag_enhanced_system_prompt
+)   
 from prompts.prompt_loader import PromptLoader
 
 load_dotenv()
@@ -66,24 +74,21 @@ def execute_sql(sql_query: str) -> dict:
     try:
         with engine.connect() as connection:
             result = connection.execute(text(sql_query))
-            row = result.fetchone()
-            if row is None:
-                return {"value": None, "error": "No rows returned"}
-            return {"value": row[0], "error": None}
+            rows = result.fetchall()
+            columns = list(result.keys())
+            if not rows:
+                return {
+                    "columns": columns, 
+                    "value": [], 
+                    "error": None}
+            return {
+                "columns": columns,
+                "value": [list(row) for row in rows],
+                "error": None
+            }
     except Exception as e:
         print("queried database failed:", e)
         return {"value": None, "error": str(e)}
-
-# cases = load_test_cases_from_csv(csv_path)
-# sql_filters = call_llm(client, model, SYSTEM_PROMPT, cases[0]["Question_English"])
-# print(f"question:{cases[0]["Question_English"]} \n \
-#       sql_filters: {sql_filters}")
-
-# sql_query = call_llm(client, model, build_postgres_sql_generate_prompt(sql_filters), cases[0]["Question_English"])
-# print(sql_query)
-
-# query_result = execute_sql(sql_query)
-# print(query_result)
 
 def write_agent_result_to_csv(results: List[Dict], output_path: str) -> None:
     if not results:
@@ -117,24 +122,29 @@ if __name__ == "__main__":
         print(f"--- #{case['ID']} ---")
 
         # 生成sql filters
-        sql_filters = call_llm(client, model, SYSTEM_PROMPT, question)
+        sql_filters = call_llm(client, model, build_rag_enhanced_system_prompt(question), question)
         case["Filters_JSON"] = sql_filters
         time.sleep(1)
 
         # 生成sql
         if sql_filters is not None:
-            sql = call_llm(client, model, build_postgres_sql_generate_prompt(sql_filters), question)
+            sql = call_llm(client, model, build_rag_enhanced_postgres_sql_generate_prompt(question, sql_filters), question)
         else:
             sql = "sql filters is none"
         case["Generated_SQL"] = sql
 
         # 执行sql
         query_result = execute_sql(sql)
-        case["LLM_SQL_Value"] = query_result["value"]
+
+        llm_value = None
+        if query_result["value"]:
+            llm_value = query_result["value"][0][0]
+
+        case["LLM_SQL_Value"] = llm_value
         case["Error_Message"] = query_result["error"]
 
         # 比较结果
-        is_correct = (query_result["value"] == case["GroundTruthValue"])
+        is_correct = (llm_value == case["GroundTruthValue"])
         case["Is_Correct"] = is_correct
         case["Filter_Version"] = filter_version
         case["SQL_Gen_Version"] = sql_gen_version
@@ -150,5 +160,5 @@ if __name__ == "__main__":
     print(f"Accuracy: {correct}/{total} ({correct/total*100:.1f}%)")
     print(f"Filter Version: {filter_version}")
     print(f"SQL Gen Version: {sql_gen_version}")
-    output_path = os.path.join(BASE_DIR, "results", f"eval_{filter_version}_{sql_gen_version}.csv")
+    output_path = os.path.join(BASE_DIR, "results", f"eval_filter_with_RAG.csv")
     write_agent_result_to_csv(cases, output_path)

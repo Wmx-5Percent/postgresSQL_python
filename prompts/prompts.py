@@ -10,6 +10,8 @@ try:
 except ImportError:
     from prompt_loader import PromptLoader   # 直接运行时
 
+from rag.retriever import Text2SQLRetriver
+
 # ──────────────────── 版本配置（改这里就行） ────────────────────
 SQL_FILTER_PROMPT_VERSION = "v2"           # SQL filter prompt 用哪个版本
 POSTGRES_SQL_GEN_PROMPT_VERSION = "v3"          # SQL generator prompt 用哪个版本
@@ -42,6 +44,12 @@ SYSTEM_PROMPT = loader.load(
 )
 # print(SYSTEM_PROMPT)
 
+_retriever = None
+def _get_retriever() -> Text2SQLRetriver:
+    global _retriever
+    if _retriever is None:
+        _retriever = Text2SQLRetriver()
+    return _retriever
 
 # ──────────────────── SQL 生成 Prompt ────────────────────
 def build_postgres_sql_generate_prompt(filters_json: str) -> str:
@@ -59,3 +67,28 @@ def build_sqlite_sql_generate_prompt(filters_json: str) -> str:
         filters_json=filters_json,
         schema_text=schema_text,
     )
+
+def build_rag_enhanced_system_prompt(question: str) -> str:
+    retriever = _get_retriever()
+    rag_context = retriever.build_rag_context([question])
+    
+    if rag_context:
+        return SYSTEM_PROMPT + "\n" + rag_context
+    else:
+        return SYSTEM_PROMPT
+
+def build_rag_enhanced_postgres_sql_generate_prompt(question: str, filters_json: str) -> str:
+    raw_sql_generate_prompt = loader.load(
+        "SQL_Postgres_generator", 
+        POSTGRES_SQL_GEN_PROMPT_VERSION,
+        filters_json=filters_json,
+        schema_text=schema_text,
+    )
+
+    retriever = _get_retriever()
+    rag_context = retriever.build_rag_context([question])
+
+    if rag_context:
+        return raw_sql_generate_prompt + "\n" + rag_context
+    else:
+        return raw_sql_generate_prompt
