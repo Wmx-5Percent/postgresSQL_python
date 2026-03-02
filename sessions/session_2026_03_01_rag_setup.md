@@ -29,7 +29,7 @@
 
 ### Step 1: `rag/config.py` ✅
 - 定义了所有路径常量（`CHROMA_PERSIST_DIR`, `KNOWLEDGE_DIR`, `GOLDEN_SQLS_PATH`）
-- 定义了检索参数（`DEFAULT_TOP_K=3`, `DEFAULT_DISTANCE_THRESHOLD=0.5`）
+- 定义了检索参数（`DEFAULT_DISTANCE_THRESHOLD_GOLDEN_SQL=3`, `DEFAULT_DISTANCE_THRESHOLD=0.5`）
 - 定义了 Collection 名称（`COLLECTION_GOLDEN_SQLS = "golden_sqls"`）
 
 ### Step 2: `rag/indexer.py` ✅

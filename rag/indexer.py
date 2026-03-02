@@ -18,16 +18,19 @@ import csv
 from typing import List, Dict
 
 import chromadb
+import yaml
 
 from rag.config import (
     CHROMA_PERSIST_DIR,
     KNOWLEDGE_DIR,
     GOLDEN_SQLS_PATH,
-    COLLECTION_GOLDEN_SQLS
+    COLLECTION_GOLDEN_SQLS,
+    COLLECTION_DDL
 )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(BASE_DIR, "..", "tests", "Text2SQL_Test_Questions_Single_Value_RealData.csv")
+yaml_path = os.path.join(BASE_DIR, "..", "schema_compact.yaml")  # 上级目录
 # print(csv_path)
 
 class KnowledgeIndexer:
@@ -95,6 +98,49 @@ class KnowledgeIndexer:
         print(f"Upserted {len(documents)} documents → collection '{COLLECTION_GOLDEN_SQLS}' "
               f"(total: {collection.count()})")
     
+    def index_table_schema(self, yaml_file_path: str) -> None:
+        with open(yaml_file_path, "r", encoding="utf-8") as f:
+            yaml_data = yaml.safe_load(f)
+        
+        table = yaml_data['tables'][0]
+        columns = table['columns']
+
+        fields_info = ", ".join(
+            f"{col['name']}: {col.get('description', '')}"
+            for col in columns
+        )
+              
+        yaml_document = (
+            f"table_name: {table['table_name']}. "
+            f"table_description: {table['description']}. "
+            f"columns: {fields_info}."
+        )
+
+        yaml_metadata = {
+            "table_name": table["table_name"],
+            "table_description": table["description"],
+            "ddl_yaml": yaml.dump(table, default_flow_style=False, allow_unicode=True),
+        }
+
+        self._upsert_table_schema_collection(
+            ids=table["table_name"],
+            document=yaml_document,
+            metadata=yaml_metadata
+        )
+    
+    
+    def _upsert_table_schema_collection(self, ids: str, document: str, metadata: Dict) -> None:
+        collection = self.client.get_or_create_collection(
+            name=COLLECTION_DDL,
+            metadata={"hnsw:space": "cosine"}
+        )
+
+        collection.upsert(
+            ids=ids,
+            documents=document,
+            metadatas=metadata,
+        )
+
     def clear_all(self, collection_name: str) -> None:
         try:
             self.client.delete_collection(collection_name)
@@ -106,4 +152,5 @@ class KnowledgeIndexer:
 
 if __name__ == "__main__":
     knowledgeIndexer = KnowledgeIndexer()
+    knowledgeIndexer.index_table_schema(yaml_path)
     knowledgeIndexer.index_golden_sqls_from_csv(csv_path)

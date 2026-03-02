@@ -1,92 +1,95 @@
-# Compact database schema for LLM prompt injection
-# Source: t_mr_cs_summary_dailyFourSysResult @ SSMR_DW
-# Primary date field for ALL time queries: NOTI_ASSIGNED_DT
-
-columns:
-  NOTI_ID:
-    type: varchar
-    desc: "Unique notification/ticket identifier (10+ digits, e.g., '28800001618')"
-
-  NOTI_DT:
-    type: date
-    desc: "Notification creation date — when the service ticket was first created"
-
-  NOTI_ASSIGNED_YYYYMM:
-    type: varchar
-    desc: "Year-month when notification was assigned (YYYYMM format, e.g., '202501')"
-
-  NOTI_ASSIGNED_DT:
-    type: date
-    desc: "Date when notification was assigned — PRIMARY date field for ALL time-based queries"
-
-  NOTI_CATEGORY_TEXT:
-    type: varchar
-    desc: "Service ticket category text (e.g., 'Repair due to Totally Down', 'Maintenance')"
-
-  NOTI_TEXT:
-    type: varchar
-    desc: "Original notification text with detailed complaint/issue description"
-
-  SYS_MAT_ID:
-    type: varchar
-    desc: "System Material ID — 7-8 digit product model identifier (e.g., '10840815')"
-
-  SYS_SERIAL_ID:
-    type: varchar
-    desc: "System Serial ID — unique equipment instance (1-6 digits, e.g., '74017')"
-
-  MAT_SYS_GROUP_TEXT:
-    type: varchar
-    desc: "Product family short name (e.g., 'AMIRA', 'VIDA', 'AERA', 'SKYRA')"
-
-  MAT_IVK_GROUP_TEXT:
-    type: varchar
-    desc: "Full product name including brand (e.g., 'MAGNETOM AMIRA', 'MAGNETOM VIDA')"
-
-  Issue_Summary_LLM:
-    type: varchar
-    desc: "LLM-generated summary of the issue/complaint"
-
-  Troubleshooting_Steps_LLM:
-    type: varchar
-    desc: "LLM-generated troubleshooting steps taken or recommended"
-
-  Solution_And_Action_Taken_LLM:
-    type: varchar
-    desc: "LLM-generated description of solution and actions taken"
-
-  Problem_CAT_L2_LLM:
-    type: varchar
-    desc: "Level 2 problem category — specific subcategory (e.g., 'Cooling System and Shield Temperature')"
-
-  Problem_CAT_L1_LLM:
-    type: varchar
-    desc: "Level 1 problem category — high-level classification (e.g., 'Magnet', 'Hardware', 'Software')"
-
-  NOTI_DT_YEAROFMonth:
-    type: int
-    desc: "Year-month of notification date as integer (YYYYMM, e.g., 202501)"
-
-  NOTI_COUNTRY_ID:
-    type: varchar
-    desc: "Country code (e.g., 'DE' for Germany, 'FR' for France)"
-
-  NOTI_COUNTRY_TEXT:
-    type: nvarchar
-    desc: "Full country name where the equipment is located (e.g., 'Germany', 'France')"
-
-  NOTI_CURRENT_CLOSED_DT:
-    type: varchar
-    desc: "Date when ticket was closed. **NULL means the ticket is still OPEN.** Open tickets: WHERE NOTI_CURRENT_CLOSED_DT IS NULL. Closed tickets: WHERE NOTI_CURRENT_CLOSED_DT IS NOT NULL."
-
-  NOTI_SP_CONSUMED_FLG:
-    type: varchar
-    desc: "Spare parts consumed flag ('Y' = Yes, 'N' = No)"
-
-  NOTI_SYS_SW_VS:
-    type: varchar
-    desc: "System software version at time of ticket (e.g., 'VE11S-SP02', 'VA50A-SP01')"
-
-  NOTI_CATEGORY_ID:
-    type: varchar
-    desc: "Numeric category ID corresponding to NOTI_CATEGORY_TEXT (e.g., '100' → 'Repair due to Totally Down')"
+tables:
+  - table_name: "t_mr_cs_summary_dailyFourSysResult"
+    description: "Summary view of daily customer service (CS) notifications and tickets for Magnetic Resonance (MR) systems. It contains comprehensive ticket details, equipment material information, problem categorizations, and LLM-generated troubleshooting insights."
+    primary_key: "NOTI_ID"
+    columns:
+      - name: "NOTI_ID"
+        type: "VARCHAR"
+        description: "Unique notification/ticket identifier (10+ digits, e.g., '28800001618')"
+      
+      - name: "NOTI_DT"
+        type: "DATE"
+        description: "Notification creation date — when the service ticket was first created"
+      
+      - name: "NOTI_ASSIGNED_YYYYMM"
+        type: "VARCHAR"
+        description: "Year-month when notification was assigned (YYYYMM format, e.g., '202501')"
+      
+      - name: "NOTI_ASSIGNED_DT"
+        type: "DATE"
+        description: "Date when notification was assigned — PRIMARY date field for ALL time-based queries"
+      
+      - name: "NOTI_CATEGORY_TEXT"
+        type: "VARCHAR"
+        description: "Service ticket category text (e.g., 'Repair due to Totally Down', 'Maintenance')"
+      
+      - name: "NOTI_CATEGORY_ID"
+        type: "VARCHAR"
+        description: "Numeric category ID corresponding to NOTI_CATEGORY_TEXT (e.g., '100' for 'Repair due to Totally Down')"
+      
+      - name: "NOTI_TEXT"
+        type: "VARCHAR"
+        description: "Original notification text with detailed complaint/issue description"
+      
+      - name: "SYS_MAT_ID"
+        type: "VARCHAR"
+        description: "System Material ID — 7-8 digit product model identifier (e.g., '10840815')"
+      
+      - name: "SYS_SERIAL_ID"
+        type: "VARCHAR"
+        description: "System Serial ID — unique equipment instance (1-6 digits, e.g., '74017')"
+      
+      - name: "MAT_SYS_GROUP_TEXT"
+        type: "VARCHAR"
+        description: "Product family short name (e.g., 'AMIRA', 'VIDA', 'AERA', 'SKYRA')"
+      
+      - name: "MAT_IVK_GROUP_TEXT"
+        type: "VARCHAR"
+        description: "Full product name including brand (e.g., 'MAGNETOM AMIRA', 'MAGNETOM VIDA')"
+      
+      - name: "Issue_Summary_LLM"
+        type: "VARCHAR"
+        description: "LLM-generated summary of the issue/complaint"
+      
+      - name: "Troubleshooting_Steps_LLM"
+        type: "VARCHAR"
+        description: "LLM-generated troubleshooting steps taken or recommended"
+      
+      - name: "Solution_And_Action_Taken_LLM"
+        type: "VARCHAR"
+        description: "LLM-generated description of solution and actions taken"
+      
+      - name: "Problem_CAT_L1_LLM"
+        type: "VARCHAR"
+        description: "Level 1 problem category — high-level classification (e.g., 'Magnet', 'Hardware', 'Software')"
+      
+      - name: "Problem_CAT_L2_LLM"
+        type: "VARCHAR"
+        description: "Level 2 problem category — specific subcategory (e.g., 'Cooling System and Shield Temperature')"
+      
+      - name: "NOTI_DT_YEAROFMonth"
+        type: "INT"
+        description: "Year-month of notification date as integer (YYYYMM, e.g., 202501)"
+      
+      - name: "NOTI_COUNTRY_ID"
+        type: "VARCHAR"
+        description: "Country code (e.g., 'DE' for Germany, 'FR' for France)"
+      
+      - name: "NOTI_COUNTRY_TEXT"
+        type: "NVARCHAR"
+        description: "Full country name where the equipment is located (e.g., 'Germany', 'France')"
+      
+      - name: "NOTI_CURRENT_CLOSED_DT"
+        type: "VARCHAR"
+        description: "Date when ticket was closed. IMPORTANT: NULL means the ticket is still OPEN. Use 'WHERE NOTI_CURRENT_CLOSED_DT IS NULL' for open tickets and 'IS NOT NULL' for closed ones."
+      
+      - name: "NOTI_SP_CONSUMED_FLG"
+        type: "VARCHAR"
+        description: "Spare parts consumed flag"
+        enums:
+          - "Y: Yes, spare parts were consumed"
+          - "N: No, spare parts were not consumed"
+      
+      - name: "NOTI_SYS_SW_VS"
+        type: "VARCHAR"
+        description: "System software version at time of ticket (e.g., 'VE11S-SP02', 'VA50A-SP01')"

@@ -122,16 +122,17 @@ if __name__ == "__main__":
         print(f"--- #{case['ID']} ---")
 
         # 生成sql filters
-        sql_filters = call_llm(client, model, build_rag_enhanced_system_prompt(question), question)
-        case["Filters_JSON"] = sql_filters
-        time.sleep(1)
+        # sql_filters = call_llm(client, model, build_rag_enhanced_system_prompt(question), question)
+        # case["Filters_JSON"] = sql_filters
+        # time.sleep(1)
 
         # 生成sql
-        if sql_filters is not None:
-            sql = call_llm(client, model, build_rag_enhanced_postgres_sql_generate_prompt(question, sql_filters), question)
-        else:
-            sql = "sql filters is none"
-        case["Generated_SQL"] = sql
+        # if sql_filters is not None:
+            # sql = call_llm(client, model, build_rag_enhanced_postgres_sql_generate_prompt(question, sql_filters), question)
+        sql = call_llm(client, model, build_rag_enhanced_postgres_sql_generate_prompt(question, "no json filters"), question)
+        # else:
+        #     sql = "sql filters is none"
+        # case["Generated_SQL"] = sql
 
         # 执行sql
         query_result = execute_sql(sql)
@@ -160,5 +161,5 @@ if __name__ == "__main__":
     print(f"Accuracy: {correct}/{total} ({correct/total*100:.1f}%)")
     print(f"Filter Version: {filter_version}")
     print(f"SQL Gen Version: {sql_gen_version}")
-    output_path = os.path.join(BASE_DIR, "results", f"eval_filter_with_RAG.csv")
+    output_path = os.path.join(BASE_DIR, "results", f"no sql filters injection.csv")
     write_agent_result_to_csv(cases, output_path)

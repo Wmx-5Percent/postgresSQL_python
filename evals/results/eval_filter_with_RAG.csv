@@ -2,9 +2,9 @@ ID,Difficulty,Category,Question_English,Logic_Hint,PostgreSQL_Query,GroundTruthV
 1,Basic,Device & Country,How many total tickets do we have for 'AMIRA' devices located in Germany?,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'AMIRA' AND NOTI_COUNTRY_TEXT = 'Germany',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'AMIRA' AND (NOTI_COUNTRY_TEXT = 'Germany' OR NOTI_COUNTRY_ID = 'DE');,148,"{
   ""sql_filters"": [
     {
-      ""column"": ""MAT_IVK_GROUP_TEXT"",
-      ""operator"": ""LIKE"",
-      ""value"": ""%AMIRA%""
+      ""column"": ""MAT_SYS_GROUP_TEXT"",
+      ""operator"": ""="",
+      ""value"": ""AMIRA""
     },
     {
       ""column"": ""NOTI_COUNTRY_ID"",
@@ -12,29 +12,25 @@ ID,Difficulty,Category,Question_English,Logic_Hint,PostgreSQL_Query,GroundTruthV
       ""value"": ""DE""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_tickets
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%AMIRA%'
+WHERE MAT_SYS_GROUP_TEXT = 'AMIRA'
   AND NOTI_COUNTRY_ID = 'DE'
 LIMIT 100;",147,,FALSE,v2,v3
 2,Basic,Device & Country,What is the total number of service tickets for the 'VIDA' product line in Switzerland?,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Switzerland',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Switzerland';,41,"{
   ""sql_filters"": [
     {
-      ""column"": ""MAT_IVK_GROUP_TEXT"",
+      ""column"": ""MAT_SYS_GROUP_TEXT"",
       ""operator"": ""LIKE"",
       ""value"": ""%VIDA%""
     },
     {
-      ""column"": ""NOTI_COUNTRY_ID"",
+      ""column"": ""NOTI_COUNTRY_TEXT"",
       ""operator"": ""="",
-      ""value"": ""CH""
+      ""value"": ""Switzerland""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_tickets
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%VIDA%'
-  AND NOTI_COUNTRY_ID = 'CH'
-LIMIT 100;",41,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT LIKE '%VIDA%' AND NOTI_COUNTRY_TEXT = 'Switzerland' LIMIT 100;,41,,TRUE,v2,v3
 3,Basic,Device & Country,How many records are there for 'SEMPRA-MICA' systems operating in Brazil?,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'SEMPRA-MICA' AND NOTI_COUNTRY_TEXT = 'Brazil',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_IVK_GROUP_TEXT ILIKE '%SEMPRA-MICA%' AND NOTI_COUNTRY_TEXT = 'Brazil';,118,"{
   ""sql_filters"": [
     {
@@ -48,17 +44,13 @@ LIMIT 100;",41,,TRUE,v2,v3
       ""value"": ""Brazil""
     }
   ]
-}","SELECT COUNT(*) AS record_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%SEMPRA-MICA%'
-  AND NOTI_COUNTRY_TEXT = 'Brazil'
-LIMIT 100;",118,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS record_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_IVK_GROUP_TEXT LIKE '%SEMPRA-MICA%' AND NOTI_COUNTRY_TEXT = 'Brazil' LIMIT 100;,118,,TRUE,v2,v3
 4,Basic,Device & Country,Count the total number of notifications reported for 'SKYRA' systems in Australia.,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'SKYRA' AND NOTI_COUNTRY_TEXT = 'Australia',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'SKYRA' AND NOTI_COUNTRY_TEXT = 'Australia';,33,"{
   ""sql_filters"": [
     {
-      ""column"": ""MAT_IVK_GROUP_TEXT"",
-      ""operator"": ""LIKE"",
-      ""value"": ""%SKYRA%""
+      ""column"": ""MAT_SYS_GROUP_TEXT"",
+      ""operator"": ""="",
+      ""value"": ""SKYRA""
     },
     {
       ""column"": ""NOTI_COUNTRY_TEXT"",
@@ -66,17 +58,13 @@ LIMIT 100;",118,,TRUE,v2,v3
       ""value"": ""Australia""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_notifications
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%SKYRA%'
-  AND NOTI_COUNTRY_TEXT = 'Australia'
-LIMIT 100;",35,,FALSE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'SKYRA' AND NOTI_COUNTRY_TEXT = 'Australia' LIMIT 100;,33,,TRUE,v2,v3
 5,Basic,Device & Country,How many 'VIDA' systems located in Austria have generated a service ticket?,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Austria',SELECT COUNT(DISTINCT SYS_SERIAL_ID) AS system_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Austria';,11,"{
   ""sql_filters"": [
     {
-      ""column"": ""MAT_IVK_GROUP_TEXT"",
-      ""operator"": ""LIKE"",
-      ""value"": ""%VIDA%""
+      ""column"": ""MAT_SYS_GROUP_TEXT"",
+      ""operator"": ""="",
+      ""value"": ""VIDA""
     },
     {
       ""column"": ""NOTI_COUNTRY_TEXT"",
@@ -84,11 +72,7 @@ LIMIT 100;",35,,FALSE,v2,v3
       ""value"": ""Austria""
     }
   ]
-}","SELECT COUNT(DISTINCT SYS_MAT_ID || '-' || SYS_SERIAL_ID) AS vida_system_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%VIDA%'
-  AND NOTI_COUNTRY_TEXT = 'Austria'
-LIMIT 100;",11,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT SYS_SERIAL_ID) AS system_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Austria' LIMIT 100;,11,,TRUE,v2,v3
 6,Basic,Category & Spare Parts,How many 'Repair due to Partially Down' incidents did not consume any spare parts?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'N',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'N';,422,"{
   ""sql_filters"": [
     {
@@ -102,11 +86,7 @@ LIMIT 100;",11,,TRUE,v2,v3
       ""value"": ""N""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS incident_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down'
-  AND NOTI_SP_CONSUMED_FLG = 'N'
-LIMIT 100;",422,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'N' LIMIT 100;,422,,TRUE,v2,v3
 7,Basic,Category & Spare Parts,What is the total count of 'Repair due to Totally Down' tickets where no spare parts were consumed?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down' AND NOTI_SP_CONSUMED_FLG = 'N',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down' AND NOTI_SP_CONSUMED_FLG = 'N';,84,"{
   ""sql_filters"": [
     {
@@ -120,11 +100,7 @@ LIMIT 100;",422,,TRUE,v2,v3
       ""value"": ""N""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down'
-  AND NOTI_SP_CONSUMED_FLG = 'N'
-LIMIT 100;",84,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down' AND NOTI_SP_CONSUMED_FLG = 'N' LIMIT 100;,84,,TRUE,v2,v3
 8,Basic,Category & Spare Parts,How many times did a 'Scheduled Reactive Service' actually require spare parts to be consumed?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_SP_CONSUMED_FLG = 'Y',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_SP_CONSUMED_FLG = 'Y';,71,"{
   ""sql_filters"": [
     {
@@ -138,11 +114,7 @@ LIMIT 100;",84,,TRUE,v2,v3
       ""value"": ""Y""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service'
-  AND NOTI_SP_CONSUMED_FLG = 'Y'
-LIMIT 100;",71,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_SP_CONSUMED_FLG = 'Y' LIMIT 100;,71,,TRUE,v2,v3
 9,Basic,Category & Spare Parts,Count the number of 'Repair due to Partially Down' tickets that consumed spare parts.,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'Y',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'Y';,114,"{
   ""sql_filters"": [
     {
@@ -156,11 +128,7 @@ LIMIT 100;",71,,TRUE,v2,v3
       ""value"": ""Y""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down'
-  AND NOTI_SP_CONSUMED_FLG = 'Y'
-LIMIT 100;",114,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_SP_CONSUMED_FLG = 'Y' LIMIT 100;,114,,TRUE,v2,v3
 10,Basic,Category & Spare Parts,How many 'Repair due to Totally Down' incidents successfully replaced and consumed spare parts?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down' AND NOTI_SP_CONSUMED_FLG = 'Y',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down' AND NOTI_SP_CONSUMED_FLG = 'Y';,27,"{
   ""sql_filters"": [
     {
@@ -174,7 +142,7 @@ LIMIT 100;",114,,TRUE,v2,v3
       ""value"": ""Y""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS incident_count
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE NOTI_CATEGORY_TEXT = 'Repair due to Totally Down'
   AND NOTI_SP_CONSUMED_FLG = 'Y'
@@ -188,21 +156,21 @@ LIMIT 100;",27,,TRUE,v2,v3
     },
     {
       ""column"": ""Problem_CAT_L2_LLM"",
-      ""operator"": ""="",
-      ""value"": ""CAN24 Module Reporting Failures""
+      ""operator"": ""LIKE"",
+      ""value"": ""%CAN24 Module Reporting Failures%""
     }
   ]
 }","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE Problem_CAT_L1_LLM = 'Magnet'
-  AND Problem_CAT_L2_LLM = 'CAN24 Module Reporting Failures'
+  AND Problem_CAT_L2_LLM ILIKE '%CAN24 Module Reporting Failures%'
 LIMIT 100;",65,,TRUE,v2,v3
 12,Intermediate,Problem Classification,What is the total number of 'Cooling' incidents specifically caused by 'Pressure-Related' issues?,SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM = 'Pressure-Related',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM ILIKE '%Pressure-Related%';,45,"{
   ""sql_filters"": [
     {
-      ""column"": ""Problem_CAT_L2_LLM"",
-      ""operator"": ""LIKE"",
-      ""value"": ""%Cooling%""
+      ""column"": ""Problem_CAT_L1_LLM"",
+      ""operator"": ""="",
+      ""value"": ""Cooling""
     },
     {
       ""column"": ""Problem_CAT_L2_LLM"",
@@ -210,11 +178,7 @@ LIMIT 100;",65,,TRUE,v2,v3
       ""value"": ""%Pressure-Related%""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_incidents
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE Problem_CAT_L2_LLM LIKE '%Cooling%'
-  AND Problem_CAT_L2_LLM LIKE '%Pressure-Related%'
-LIMIT 100;",0,,FALSE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM LIKE '%Pressure-Related%' LIMIT 100;,45,,TRUE,v2,v3
 13,Intermediate,Problem Classification,How many service requests belong to the 'Local Coil' category under Level 1 and are described as 'Connection and Recognition' under Level 2?,SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Local Coil' AND Problem_CAT_L2_LLM = 'Connection and Recognition',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Local Coil' AND Problem_CAT_L2_LLM ILIKE '%Connection and Recognition%';,29,"{
   ""sql_filters"": [
     {
@@ -224,21 +188,17 @@ LIMIT 100;",0,,FALSE,v2,v3
     },
     {
       ""column"": ""Problem_CAT_L2_LLM"",
-      ""operator"": ""="",
-      ""value"": ""Connection and Recognition""
+      ""operator"": ""LIKE"",
+      ""value"": ""%Connection and Recognition%""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS service_request_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE Problem_CAT_L1_LLM = 'Local Coil'
-  AND Problem_CAT_L2_LLM = 'Connection and Recognition'
-LIMIT 100;",29,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Local Coil' AND Problem_CAT_L2_LLM LIKE '%Connection and Recognition%' LIMIT 100;,29,,TRUE,v2,v3
 14,Intermediate,Problem Classification,Find the total count of tickets related to 'Cooling' that involve 'Water Flow and Blockage Issues'.,SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM = 'Water Flow and Blockage Issues',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM ILIKE '%Water Flow and Blockage Issues%';,23,"{
   ""sql_filters"": [
     {
       ""column"": ""Problem_CAT_L1_LLM"",
-      ""operator"": ""LIKE"",
-      ""value"": ""%Cooling%""
+      ""operator"": ""="",
+      ""value"": ""Cooling""
     },
     {
       ""column"": ""Problem_CAT_L2_LLM"",
@@ -248,7 +208,7 @@ LIMIT 100;",29,,TRUE,v2,v3
   ]
 }","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
-WHERE Problem_CAT_L1_LLM LIKE '%Cooling%'
+WHERE Problem_CAT_L1_LLM = 'Cooling'
   AND Problem_CAT_L2_LLM LIKE '%Water Flow and Blockage Issues%'
 LIMIT 100;",23,,TRUE,v2,v3
 15,Intermediate,Problem Classification,How many times was a 'Cold Head' issue reported under the 'Magnet' problem category?,SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Magnet' AND Problem_CAT_L2_LLM = 'Cold Head',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Magnet' AND Problem_CAT_L2_LLM ILIKE '%Cold Head%';,23,"{
@@ -259,16 +219,16 @@ LIMIT 100;",23,,TRUE,v2,v3
       ""value"": ""Magnet""
     },
     {
-      ""column"": ""Issue_Summary_LLM"",
+      ""column"": ""Problem_CAT_L2_LLM"",
       ""operator"": ""LIKE"",
       ""value"": ""%Cold Head%""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS cold_head_issue_count
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE Problem_CAT_L1_LLM = 'Magnet'
-  AND Issue_Summary_LLM LIKE '%Cold Head%'
-LIMIT 100;",5,,FALSE,v2,v3
+  AND Problem_CAT_L2_LLM ILIKE '%Cold Head%'
+LIMIT 100;",23,,TRUE,v2,v3
 16,Intermediate,Time & Category,How many 'Repair due to Partially Down' tickets were assigned in May 2024?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_ASSIGNED_YYYYMM = '202405' AND NOTI_CATEGORY_TEXT = 'Repair due to Partially Down',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down' AND NOTI_ASSIGNED_YYYYMM = '202405';,154,"{
   ""sql_filters"": [
     {
@@ -311,12 +271,7 @@ LIMIT 100;",154,,TRUE,v2,v3
       ""value"": ""2023-11-30""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_requests
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service'
-  AND NOTI_ASSIGNED_DT >= DATE '2023-11-01'
-  AND NOTI_ASSIGNED_DT <= DATE '2023-11-30'
-LIMIT 100;",42,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_ASSIGNED_DT >= DATE '2023-11-01' AND NOTI_ASSIGNED_DT <= DATE '2023-11-30' LIMIT 100;,42,,TRUE,v2,v3
 18,Intermediate,Time & Category,How many tickets for 'Scheduled Reactive Service' were processed in October 2024?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_ASSIGNED_YYYYMM = '202410' AND NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service',SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_ASSIGNED_YYYYMM = '202410';,35,"{
   ""sql_filters"": [
     {
@@ -359,7 +314,7 @@ LIMIT 100;",35,,TRUE,v2,v3
       ""value"": ""2021-01-31""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS notification_count
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE NOTI_CATEGORY_TEXT = 'Repair due to Partially Down'
   AND NOTI_ASSIGNED_DT >= DATE '2021-01-01'
@@ -386,13 +341,13 @@ LIMIT 100;",24,,TRUE,v2,v3
 }","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service'
-  AND NOTI_ASSIGNED_DT >= '2024-09-01'::date
-  AND NOTI_ASSIGNED_DT <= '2024-09-30'::date
+  AND NOTI_ASSIGNED_DT >= DATE '2024-09-01'
+  AND NOTI_ASSIGNED_DT <= DATE '2024-09-30'
 LIMIT 100;",24,,TRUE,v2,v3
 21,Advanced,Closed Status explicit,How many closed service tickets do we have for 'AMIRA' devices located in Germany?,SELECT COUNT(NOTI_ID) FROM table WHERE MAT_SYS_GROUP_TEXT = 'AMIRA' AND NOTI_COUNTRY_TEXT = 'Germany' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL,SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_SYS_GROUP_TEXT = 'AMIRA' AND (NOTI_COUNTRY_TEXT = 'Germany' OR NOTI_COUNTRY_ID = 'DE') AND NOTI_CURRENT_CLOSED_DT IS NOT NULL;,148,"{
   ""sql_filters"": [
     {
-      ""column"": ""MAT_IVK_GROUP_TEXT"",
+      ""column"": ""MAT_SYS_GROUP_TEXT"",
       ""operator"": ""LIKE"",
       ""value"": ""%AMIRA%""
     },
@@ -407,19 +362,14 @@ LIMIT 100;",24,,TRUE,v2,v3
       ""value"": null
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS closed_ticket_count
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%AMIRA%'
+WHERE MAT_SYS_GROUP_TEXT LIKE '%AMIRA%'
   AND NOTI_COUNTRY_ID = 'DE'
   AND NOTI_CURRENT_CLOSED_DT IS NOT NULL
 LIMIT 100;",147,,FALSE,v2,v3
 22,Advanced,Closed Status explicit,What is the total number of closed tickets classified as 'Customer request' with 'Configuration and Setup Requests'?,SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Customer request' AND Problem_CAT_L2_LLM = 'Configuration and Setup Requests' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL,SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Customer request' AND Problem_CAT_L2_LLM ILIKE '%Configuration and Setup Requests%' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL;,50,"{
   ""sql_filters"": [
-    {
-      ""column"": ""NOTI_CURRENT_CLOSED_DT"",
-      ""operator"": ""IS NOT NULL"",
-      ""value"": null
-    },
     {
       ""column"": ""Problem_CAT_L1_LLM"",
       ""operator"": ""="",
@@ -427,27 +377,22 @@ LIMIT 100;",147,,FALSE,v2,v3
     },
     {
       ""column"": ""Problem_CAT_L2_LLM"",
-      ""operator"": ""="",
-      ""value"": ""Configuration and Setup Requests""
+      ""operator"": ""LIKE"",
+      ""value"": ""%Configuration and Setup Requests%""
+    },
+    {
+      ""column"": ""NOTI_CURRENT_CLOSED_DT"",
+      ""operator"": ""IS NOT NULL"",
+      ""value"": null
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_closed_tickets
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CURRENT_CLOSED_DT IS NOT NULL
-  AND Problem_CAT_L1_LLM = 'Customer request'
-  AND Problem_CAT_L2_LLM = 'Configuration and Setup Requests'
-LIMIT 100;",50,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Customer request' AND Problem_CAT_L2_LLM LIKE '%Configuration and Setup Requests%' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL LIMIT 100;,50,,TRUE,v2,v3
 23,Advanced,Closed Status explicit,How many 'Scheduled Reactive Service' requests assigned in November 2024 have already been closed?,SELECT COUNT(NOTI_ID) FROM table WHERE NOTI_ASSIGNED_YYYYMM = '202411' AND NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL,SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' AND NOTI_ASSIGNED_YYYYMM = '202411' AND NOTI_CURRENT_CLOSED_DT IS NOT NULL;,31,"{
   ""sql_filters"": [
     {
       ""column"": ""NOTI_CATEGORY_TEXT"",
       ""operator"": ""="",
       ""value"": ""Scheduled Reactive Service""
-    },
-    {
-      ""column"": ""NOTI_CURRENT_CLOSED_DT"",
-      ""operator"": ""IS NOT NULL"",
-      ""value"": null
     },
     {
       ""column"": ""NOTI_ASSIGNED_DT"",
@@ -458,14 +403,19 @@ LIMIT 100;",50,,TRUE,v2,v3
       ""column"": ""NOTI_ASSIGNED_DT"",
       ""operator"": ""<="",
       ""value"": ""2024-11-30""
+    },
+    {
+      ""column"": ""NOTI_CURRENT_CLOSED_DT"",
+      ""operator"": ""IS NOT NULL"",
+      ""value"": null
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS closed_request_count
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service'
+  AND NOTI_ASSIGNED_DT >= DATE '2024-11-01'
+  AND NOTI_ASSIGNED_DT <= DATE '2024-11-30'
   AND NOTI_CURRENT_CLOSED_DT IS NOT NULL
-  AND NOTI_ASSIGNED_DT >= '2024-11-01'
-  AND NOTI_ASSIGNED_DT <= '2024-11-30'
 LIMIT 100;",31,,TRUE,v2,v3
 24,Advanced,Single Value - Distinct Count,How many distinct system groups (like AMIRA or VIDA) have reported issues in Germany?,SELECT COUNT(DISTINCT MAT_SYS_GROUP_TEXT) FROM table WHERE NOTI_COUNTRY_TEXT = 'Germany',SELECT COUNT(DISTINCT MAT_SYS_GROUP_TEXT) AS distinct_system_groups FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_COUNTRY_TEXT = 'Germany' OR NOTI_COUNTRY_ID = 'DE';,10,"{
   ""sql_filters"": [
@@ -475,7 +425,7 @@ LIMIT 100;",31,,TRUE,v2,v3
       ""value"": ""DE""
     }
   ]
-}","SELECT COUNT(DISTINCT MAT_SYS_GROUP_TEXT) AS distinct_system_group_count
+}","SELECT COUNT(DISTINCT MAT_SYS_GROUP_TEXT) AS distinct_system_groups
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE NOTI_COUNTRY_ID = 'DE'
 LIMIT 100;",10,,TRUE,v2,v3
@@ -487,10 +437,7 @@ LIMIT 100;",10,,TRUE,v2,v3
       ""value"": ""Customer request""
     }
   ]
-}","SELECT COUNT(DISTINCT Problem_CAT_L2_LLM) AS unique_level2_problem_category_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE Problem_CAT_L1_LLM = 'Customer request'
-LIMIT 100;",8,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT Problem_CAT_L2_LLM) AS distinct_l2_categories FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Customer request' LIMIT 100;,8,,TRUE,v2,v3
 26,Advanced,Single Value - Distinct Count,How many different countries have logged at least one service ticket for the 'SEMPRA-MICA' product line?,SELECT COUNT(DISTINCT NOTI_COUNTRY_TEXT) FROM table WHERE MAT_SYS_GROUP_TEXT = 'SEMPRA-MICA',SELECT COUNT(DISTINCT NOTI_COUNTRY_TEXT) AS distinct_countries FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_IVK_GROUP_TEXT ILIKE '%SEMPRA-MICA%';,19,"{
   ""sql_filters"": [
     {
@@ -499,11 +446,7 @@ LIMIT 100;",8,,TRUE,v2,v3
       ""value"": ""%SEMPRA-MICA%""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_COUNTRY_ID) AS country_count
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE MAT_IVK_GROUP_TEXT LIKE '%SEMPRA-MICA%'
-  AND NOTI_COUNTRY_ID IS NOT NULL
-LIMIT 100;",19,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_COUNTRY_TEXT) AS distinct_countries FROM t_mr_cs_summary_dailyFourSysResult WHERE MAT_IVK_GROUP_TEXT LIKE '%SEMPRA-MICA%' LIMIT 100;,19,,TRUE,v2,v3
 27,Advanced,Single Value - Distinct Count,Across how many distinct months have we assigned a 'Scheduled Reactive Service' ticket?,SELECT COUNT(DISTINCT NOTI_ASSIGNED_YYYYMM) FROM table WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service',SELECT COUNT(DISTINCT NOTI_ASSIGNED_YYYYMM) AS distinct_months FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service';,48,"{
   ""sql_filters"": [
     {
@@ -512,10 +455,7 @@ LIMIT 100;",19,,TRUE,v2,v3
       ""value"": ""Scheduled Reactive Service""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ASSIGNED_YYYYMM) AS distinct_assigned_months
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service'
-LIMIT 100;",48,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_ASSIGNED_YYYYMM) AS distinct_months FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_CATEGORY_TEXT = 'Scheduled Reactive Service' LIMIT 100;,48,,TRUE,v2,v3
 28,Advanced,Single Value - Distinct Count,How many different ticket categories successfully recorded the consumption of spare parts?,SELECT COUNT(DISTINCT NOTI_CATEGORY_TEXT) FROM table WHERE NOTI_SP_CONSUMED_FLG = 'Y',SELECT COUNT(DISTINCT NOTI_CATEGORY_TEXT) AS distinct_ticket_categories FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_SP_CONSUMED_FLG = 'Y';,3,"{
   ""sql_filters"": [
     {
@@ -524,51 +464,13 @@ LIMIT 100;",48,,TRUE,v2,v3
       ""value"": ""Y""
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_CATEGORY_TEXT) AS distinct_ticket_categories_with_spare_parts_consumed
-FROM t_mr_cs_summary_dailyFourSysResult
-WHERE NOTI_SP_CONSUMED_FLG = 'Y'
-LIMIT 100;",3,,TRUE,v2,v3
+}",SELECT COUNT(DISTINCT NOTI_CATEGORY_TEXT) AS distinct_ticket_categories FROM t_mr_cs_summary_dailyFourSysResult WHERE NOTI_SP_CONSUMED_FLG = 'Y' LIMIT 100;,3,,TRUE,v2,v3
 29,Advanced,Logical OR combination,What is the combined total count of tickets that belong to EITHER 'VIDA' systems in Germany OR 'SEMPRA-MICA' systems in Brazil?,SELECT COUNT(NOTI_ID) FROM table WHERE (MAT_SYS_GROUP_TEXT = 'VIDA' AND NOTI_COUNTRY_TEXT = 'Germany') OR (MAT_SYS_GROUP_TEXT = 'SEMPRA-MICA' AND NOTI_COUNTRY_TEXT = 'Brazil'),SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE (MAT_SYS_GROUP_TEXT = 'VIDA' AND (NOTI_COUNTRY_TEXT = 'Germany' OR NOTI_COUNTRY_ID = 'DE')) OR (MAT_IVK_GROUP_TEXT ILIKE '%SEMPRA-MICA%' AND NOTI_COUNTRY_TEXT = 'Brazil');,244,"{
-  ""sql_filters"": [
-    {
-      ""column"": ""OR"",
-      ""operator"": ""IN"",
-      ""value"": [
-        {
-          ""sql_filters"": [
-            {
-              ""column"": ""MAT_IVK_GROUP_TEXT"",
-              ""operator"": ""LIKE"",
-              ""value"": ""%VIDA%""
-            },
-            {
-              ""column"": ""NOTI_COUNTRY_ID"",
-              ""operator"": ""="",
-              ""value"": ""DE""
-            }
-          ]
-        },
-        {
-          ""sql_filters"": [
-            {
-              ""column"": ""MAT_IVK_GROUP_TEXT"",
-              ""operator"": ""LIKE"",
-              ""value"": ""%SEMPRA-MICA%""
-            },
-            {
-              ""column"": ""NOTI_COUNTRY_ID"",
-              ""operator"": ""="",
-              ""value"": ""BR""
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_ticket_count
+  ""sql_filters"": []
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
-WHERE (MAT_IVK_GROUP_TEXT LIKE '%VIDA%' AND NOTI_COUNTRY_ID = 'DE')
-   OR (MAT_IVK_GROUP_TEXT LIKE '%SEMPRA-MICA%' AND NOTI_COUNTRY_ID = 'BR')
+WHERE (MAT_SYS_GROUP_TEXT = 'VIDA' AND (NOTI_COUNTRY_TEXT = 'Germany' OR NOTI_COUNTRY_ID = 'DE'))
+   OR (MAT_IVK_GROUP_TEXT ILIKE '%SEMPRA-MICA%' AND NOTI_COUNTRY_TEXT = 'Brazil')
 LIMIT 100;",244,,TRUE,v2,v3
 30,Advanced,Logical OR combination,"For the 'Cooling' Level 1 category, how many total tickets involve EITHER 'Pressure-Related' OR 'Water Flow and Blockage Issues'?","SELECT COUNT(NOTI_ID) FROM table WHERE Problem_CAT_L1_LLM = 'Cooling' AND Problem_CAT_L2_LLM IN ('Pressure-Related', 'Water Flow and Blockage Issues')",SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count FROM t_mr_cs_summary_dailyFourSysResult WHERE Problem_CAT_L1_LLM = 'Cooling' AND (Problem_CAT_L2_LLM ILIKE '%Pressure-Related%' OR Problem_CAT_L2_LLM ILIKE '%Water Flow and Blockage Issues%');,68,"{
   ""sql_filters"": [
@@ -586,7 +488,7 @@ LIMIT 100;",244,,TRUE,v2,v3
       ]
     }
   ]
-}","SELECT COUNT(DISTINCT NOTI_ID) AS total_tickets
+}","SELECT COUNT(DISTINCT NOTI_ID) AS ticket_count
 FROM t_mr_cs_summary_dailyFourSysResult
 WHERE Problem_CAT_L1_LLM = 'Cooling'
   AND Problem_CAT_L2_LLM IN ('Pressure-Related', 'Water Flow and Blockage Issues')

@@ -19,9 +19,12 @@ import chromadb
 
 from rag.config import (
     CHROMA_PERSIST_DIR,
-    DEFAULT_DISTANCE_THRESHOLD,
-    DEFAULT_TOP_K,
-    COLLECTION_GOLDEN_SQLS
+    DEFAULT_DISTANCE_THRESHOLD_GOLDEN_SQL,
+    DEFAULT_TOP_K_GOLDEN_SQL,
+    COLLECTION_GOLDEN_SQLS,
+    COLLECTION_DDL,
+    DEFAULT_DISTANCE_THRESHOLD_SCHEMAS,
+    DEFAULT_TOP_K_SCHEMAS
 )
 
 class Text2SQLRetriver:
@@ -40,8 +43,8 @@ class Text2SQLRetriver:
     def retrieve(
             self,
             questions: List[str],
-            top_k: int = DEFAULT_TOP_K,
-            distance_threshold: float = DEFAULT_DISTANCE_THRESHOLD
+            top_k: int = DEFAULT_TOP_K_GOLDEN_SQL,
+            distance_threshold: float = DEFAULT_DISTANCE_THRESHOLD_GOLDEN_SQL
     ) -> List[List[Dict]]:
         """
         检索最相似的 Q&A
@@ -98,6 +101,14 @@ class Text2SQLRetriver:
                 retrieved.append(item)
             all_retrieved.append(retrieved)
         return all_retrieved
+    
+    def schemas_retriever(
+            self,
+            questions: List[str],
+            top_k: int = DEFAULT_TOP_K_SCHEMAS,
+            distance_threshold: int = DEFAULT_DISTANCE_THRESHOLD_SCHEMAS
+    ) -> 
+
 
     def build_rag_context(self, questions: List[str]) -> str:
         results = self.retrieve(questions)
@@ -128,8 +139,8 @@ class Text2SQLRetriver:
 if __name__ == "__main__":
     retriever = Text2SQLRetriver()
 
-    test_question_1 = "What is the total count of service requests assigned in the month of February 2025?"
-    test_question_2 = "Who are the top 3 field service engineers with the fastest average resolution time for AMIRA systems?"
+    # test_question_1 = "How many total tickets do we have for 'AMIRA' devices located in Germany?"
+    # test_question_2 = "Who are the top 3 field service engineers with the fastest average resolution time for AMIRA systems?"
     # retrieved = retriever.retrieve([test_question_1], distance_threshold=0.3)
     # for q_idx, items in enumerate(retrieved, 1):
     #     print(f"\n{'='*60}")
@@ -141,4 +152,4 @@ if __name__ == "__main__":
     #         if "sql" in q:
     #              print(f"         SQL: {q['sql']}")
     
-    print("\n" + retriever.build_rag_context([test_question_1]))
+    # print("\n" + retriever.build_rag_context([test_question_1]))
